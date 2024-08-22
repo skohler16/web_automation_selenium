@@ -7,30 +7,31 @@ chrome_options = Options()
 options = webdriver.ChromeOptions()
 options.add_experimental_option("detach", True)
 chrome_browser = webdriver.Chrome(options=options)
-# chrome_browser.maximize_window()
+chrome_browser.maximize_window()
 chrome_browser.get('https://www.scottckohler.com')
-button = chrome_browser.find_element(By.CLASS_NAME, "fab.fa-github")
-button_text = button.get_attribute('innerHTML')
-print(button_text)
+send_message_button = chrome_browser.find_element(By.ID, "submit")
 
-# assert 'Selenium Easy Demo' in chrome_browser.title
+assert 'Send Message' in chrome_browser.page_source
 
+fName = chrome_browser.find_element(By.ID, 'fName')
+fName.clear()
+fName.send_keys("selenium")
 
+lName = chrome_browser.find_element(By.ID, 'lName')
+lName.clear()
+lName.send_keys("automation")
 
-# chrome_browser.quit()
+email = chrome_browser.find_element(By.ID, 'email')
+email.clear()
+email.send_keys("example@howcool.com")
 
-# # This solves the issue with the Popup for those that encounter it:
-# chrome_browser.implicitly_wait(2)
-# popup = chrome_browser.find_element(By.ID, 'at-cv-lightbox-close')
-# popup.click()
-#
-# user_message = chrome_browser.find_element(By.ID, 'user-message')
-# user_message.clear()
-# user_message.send_keys('I AM EXTRA COOOOL')
-#
-# time.sleep(2)
-# show_message_button = chrome_browser.find_element(By.CLASS_NAME, 'btn-default')
-# show_message_button.click()
-#
-# output_message = chrome_browser.find_element(By.ID, 'display')
-# assert 'I AM EXTRA COOOOL' in output_message.text
+message = chrome_browser.find_element(By.ID, 'message')
+message.clear()
+message.send_keys("This is an automated message that has been sent using selenium")
+
+send_message_button.click()
+
+conf_message = chrome_browser.find_element(By.ID, 'back-link')
+
+assert "Back to our site" in conf_message.text
+chrome_browser.quit()
